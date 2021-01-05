@@ -8,10 +8,19 @@ class Solution:
     #         for j_index, j in enumerate(nums[i_index+1:]):
     #             if i + j == target:
     #                 return [i_index, j_index]
+    #         return []
 
     # Solution 2
     def twoSum(self, nums: List[int], target: int) -> List[int]:
-        pass
+        num_map = dict()
+        for index, num in enumerate(nums):
+            if (target - num) in num_map:
+                return [num_map[target - num], index]
+            else:
+                num_map[num] = index
+        
+        return []
+
 
 if __name__ == "__main__":
     solution = Solution()
