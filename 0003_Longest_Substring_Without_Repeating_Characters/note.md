@@ -57,3 +57,21 @@ class Solution:
 
 ### 方案 2 - 滑动窗口
 
+方案一最大的一个缺陷是忽略了一个事实：选择字符串中的第 $k$ 个字符作为起始位置，并且得到了不包含重复字符的最长子串的结束位置为 $r_k$，那么当我们选择第 $k+1$ 个字符作为起始位置时，首先从 $k+1$ 到 $r_k$ 的字符显然是不重复的。利用了这个信息后，那时间复杂度就从 $O(N^2)$ 降至 $O(N^2)$ (左右指针分别遍历一次字符串)。
+
+```python
+class Solution:
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        r_cur, max_len = -1, 0
+        char_set = set()
+        
+        for l_cur in range(len(s)):
+            if l_cur != 0:
+                char_set.remove(s[l_cur - 1])
+            
+            while r_cur + 1 < len(s) and s[r_cur + 1] not in char_set:
+                char_set.add(s[r_cur + 1])
+                r_cur += 1
+            max_len = max(max_len, r_cur - l_cur + 1)
+        return max_len
+```
