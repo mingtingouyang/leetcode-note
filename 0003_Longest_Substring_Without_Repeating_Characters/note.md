@@ -75,3 +75,5 @@ class Solution:
             max_len = max(max_len, r_cur - l_cur + 1)
         return max_len
 ```
+
+### 方案 3
