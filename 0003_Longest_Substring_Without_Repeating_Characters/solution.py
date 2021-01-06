@@ -35,6 +35,7 @@ class Solution:
     # Solution 3
     def lengthOfLongestSubstring(self, s: str) -> int:
         cur, max_len, char_dict = -1, 0, {}
+        pass
 
 
 
