@@ -44,7 +44,6 @@ class Solution:
                 max_len = max(max_len, index - start_cur)
         return max_len
 
-
 if __name__ == "__main__":
     solution = Solution()
     res = solution.lengthOfLongestSubstring(s='abcdefadfweasdfwe')
