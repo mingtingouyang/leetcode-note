@@ -29,7 +29,7 @@
 
 **提示：**
 
-- 0 <= s.length <= 5 * 104
+- 0 <= s.length <= 5 * $10^4$
 - s 由英文字母、数字、符号和空格组成
 
 ## 解题思路
@@ -57,7 +57,7 @@ class Solution:
 
 ### 方案 2 - 滑动窗口
 
-方案一最大的一个缺陷是忽略了一个事实：选择字符串中的第 $k$ 个字符作为起始位置，并且得到了不包含重复字符的最长子串的结束位置为 $r_k$，那么当我们选择第 $k+1$ 个字符作为起始位置时，首先从 $k+1$ 到 $r_k$ 的字符显然是不重复的。利用了这个信息后，那时间复杂度就从 $O(N^2)$ 降至 $O(N^2)$ (左右指针分别遍历一次字符串)。
+方案一最大的一个缺陷是忽略了一个事实：选择字符串中的第 $k$ 个字符作为起始位置，并且得到了不包含重复字符的最长子串的结束位置为 $r_k$，那么当我们选择第 $k+1$ 个字符作为起始位置时，首先从 $k+1$ 到 $r_k$ 的字符显然是不重复的。利用了这个信息后，那时间复杂度就从 $O(N^2)$ 降至 $O(N)$ (左右指针分别遍历一次字符串)。
 
 ```python
 class Solution:
@@ -76,4 +76,20 @@ class Solution:
         return max_len
 ```
 
-### 方案 3
+### 方案 3 - 使用 Hash Map
+
+在使用 Hash Map 后，我们只需要遍历一次字符。具体做法是，在遍历过程中，先判断该字符是否出现过，再判断该字符上一次出现的位置是否是在起始坐标之后，如果是则说明子串出现了重复，所以将其实坐标更新到该字符上一次出现的位置。同时，我们在遍历过程中要不断的添加或更新字符出现的位置信息。
+
+```python
+class Solution:
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        start_cur, max_len, char_dict = -1, 0, {}
+        for index, char in enumerate(s): 
+            if char in char_dict and char_dict[char] > start_cur:
+                start_cur = char_dict[char]
+                char_dict[char] = index
+            else:
+                char_dict[char] = index
+                max_len = max(max_len, index - start_cur)
+        return max_len
+```

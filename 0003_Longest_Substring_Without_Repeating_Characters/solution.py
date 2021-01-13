@@ -29,16 +29,20 @@ class Solution:
     #             r_cur += 1
     #         # 当开始出现重复字符时，更新最大长度的值
     #         max_len = max(max_len, r_cur - l_cur + 1)
-        
     #     return max_len
 
     # Solution 3
     def lengthOfLongestSubstring(self, s: str) -> int:
-        cur, max_len, char_dict = -1, 0, {}
-        pass
-
-
-
+        start_cur, max_len, char_dict = -1, 0, {}
+        for index, char in enumerate(s): 
+            # 如果当前字符已经出现过，且出现的位置是在起始下标之后，则说明当前子串出现了重复字符，将起始下标更新到重复位置
+            if char in char_dict and char_dict[char] > start_cur:
+                start_cur = char_dict[char]
+                char_dict[char] = index
+            else:
+                char_dict[char] = index
+                max_len = max(max_len, index - start_cur)
+        return max_len
 
 
 if __name__ == "__main__":
